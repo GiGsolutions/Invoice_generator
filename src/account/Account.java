@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DataBaseImport;
-import org.apache.log4j.BasicConfigurator;
+//import org.apache.log4j.BasicConfigurator;
 
 /**
  *
@@ -25,8 +25,8 @@ public class Account extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 // Enable basic log4 configuration | for debugging
-        BasicConfigurator.configure();
-        org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
+      //  BasicConfigurator.configure();
+        //org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
 
         this.stage = stage;
         this.stage.setTitle("Account App");
