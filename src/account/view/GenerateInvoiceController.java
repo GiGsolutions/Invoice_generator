@@ -236,6 +236,7 @@ public class GenerateInvoiceController implements Initializable {
         totalItem.setQuantity(Integer.parseInt(txtFieldItemQuantity.getText()));
         totalItem.setDescription(txtFieldItemDestripcion.getText());
 
+        
 //Sets table fields
         tblItemsForInvoice.getItems().addAll(totalItem);
         tblItemsForInvoice.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
