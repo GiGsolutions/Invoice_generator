@@ -6,11 +6,8 @@
 package dbTests;
 
 import account.Account;
-import java.io.File;
 import java.net.URISyntaxException;
-import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import model.DataBaseImport;
 import model.beans.Client;
 import org.apache.log4j.BasicConfigurator;
@@ -19,7 +16,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
