@@ -1,6 +1,5 @@
 package model;
 
-import account.Account;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +18,7 @@ import model.beans.Seller;
  */
 public class DataBaseImport {
 
+    //path to the access database
     private static String DB_PATH = System.getProperty("user.dir") + "/Invoice.accdb";
 
     public DataBaseImport() {
