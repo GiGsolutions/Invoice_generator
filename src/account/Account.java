@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DataBaseImport;
@@ -21,6 +22,7 @@ import org.apache.log4j.BasicConfigurator;
 public class Account extends Application {
     
     private static final String PATH_CSS_DARK_METRO_STYLE = "resources/JMetroDarkTheme.css";
+    private final Image windowIconImage = new Image(getClass().getResource("resources/pacman@2x.png").toString());
     
 
     private Stage stage;
@@ -34,6 +36,8 @@ public class Account extends Application {
 
         this.stage = stage;
         this.stage.setTitle("Invoice Generator : GIGSolutions");
+            //Image
+         this.stage.getIcons().add(windowIconImage);
         showMainConsoleLayout();
         showGenerateInvoice();
 
