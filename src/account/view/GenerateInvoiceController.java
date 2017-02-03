@@ -2,8 +2,6 @@ package account.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -18,11 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.DataBaseImport;
 import model.InvoiceData;
-import model.beans.BuyerInfo;
 import model.beans.Client;
 import model.beans.Invoice;
 import model.beans.Item;
-import model.beans.Seller;
 import model.beans.Total_Items;
 import model.pdfGenerator.PdfFactory;
 
@@ -186,6 +182,7 @@ public class GenerateInvoiceController implements Initializable {
 //Insert into table values from Object Client which imports from Database import
         tblItem.getItems().clear();
         tblItem.getItems().addAll(new DataBaseImport().GetItemsData());
+        tblItem.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         colName.setCellValueFactory((TableColumn.CellDataFeatures<Item, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getName());
@@ -215,23 +212,20 @@ public class GenerateInvoiceController implements Initializable {
 
     @FXML
     private void onClickProduct(MouseEvent event) {
-        
-       
-        
-        txtFieldItemName.setText(tblItem.getSelectionModel().getSelectedItem().getName());
-        txtFieldItemSize.setText(tblItem.getSelectionModel().getSelectedItem().getSize());
-        txtFieldItemColor.setText(tblItem.getSelectionModel().getSelectedItem().getColor());
-        txtFieldItemDestripcion.setText(tblItem.getSelectionModel().getSelectedItem().getDescription());
-        txtFieldItemPrice.setText("" + tblItem.getSelectionModel().getSelectedItem().getPrice());
-        
-  
+
+        if (tblItem.getSelectionModel().getSelectedItem() != null) {
+
+            txtFieldItemName.setText(tblItem.getSelectionModel().getSelectedItem().getName());
+            txtFieldItemSize.setText(tblItem.getSelectionModel().getSelectedItem().getSize());
+            txtFieldItemColor.setText(tblItem.getSelectionModel().getSelectedItem().getColor());
+            txtFieldItemDestripcion.setText(tblItem.getSelectionModel().getSelectedItem().getDescription());
+            txtFieldItemPrice.setText("" + tblItem.getSelectionModel().getSelectedItem().getPrice());
+        }
     }
-    
-    
 
     @FXML
     private void onClickAddProduct(ActionEvent event) {
- 
+
         //tblItemsForInvoice.getItems().clear();
         //Item selectedItem=   tblItem.getSelectionModel().getSelectedItem();
         Total_Items totalItem = new Total_Items();
@@ -244,12 +238,14 @@ public class GenerateInvoiceController implements Initializable {
 
 //Sets table fields
         tblItemsForInvoice.getItems().addAll(totalItem);
+        tblItemsForInvoice.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         //Sets to InvoiceData values 
-        dataList= new InvoiceData();
-       // dataList.addTotalItemObject(totalItem);
+        dataList = new InvoiceData();
+        // dataList.addTotalItemObject(totalItem);
         dataList.setList(tblItemsForInvoice.getItems());
-       // PdfFactory pdfFactory = new PdfFactory(dataList);
-        
+        // PdfFactory pdfFactory = new PdfFactory(dataList);
+
         //Gives values to Total_Items List in bean       
         totalItem.setItemsList(tblItemsForInvoice.getItems());
         System.out.println(totalItem.getItemsList().size());
@@ -276,43 +272,39 @@ public class GenerateInvoiceController implements Initializable {
         colInputTotal.setCellValueFactory((TableColumn.CellDataFeatures<Total_Items, Double> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getTotal());
         });
-        
+
         ClearProducttxtFields();
 
     }
-    
-        private void ClearProducttxtFields(){
-    txtFieldItemName.clear();
-    txtFieldItemSize.clear();
-    txtFieldItemColor.clear();
-    txtFieldItemDestripcion.clear();
-    txtFieldItemPrice.clear();
-    txtFieldItemQuantity.clear();
-    
-    }
 
-    
-    
+    private void ClearProducttxtFields() {
+        txtFieldItemName.clear();
+        txtFieldItemSize.clear();
+        txtFieldItemColor.clear();
+        txtFieldItemDestripcion.clear();
+        txtFieldItemPrice.clear();
+        txtFieldItemQuantity.clear();
+
+    }
 
     @FXML
     private void onClickGeneratePdfInvoice(ActionEvent event) throws IOException {
 
         // Sukurti  K objekta
-       //InvoiceData invoiceData = setBuyerInfoToInvoice2();
-       InvoiceData invoiceD = new InvoiceData();
-      // dataList.set
-       // uzpidome objekto K reiksmes
-       invoiceD.setBuyerInfo2(fieldName.getText(),
+        //InvoiceData invoiceData = setBuyerInfoToInvoice2();
+        InvoiceData invoiceD = new InvoiceData();
+        // dataList.set
+        // uzpidome objekto K reiksmes
+        invoiceD.setBuyerInfo2(fieldName.getText(),
                 fieldCode.getText(),
                 fieldAdress.getText(),
                 fieldCity.getText(),
                 fieldCountry.getText(),
                 fieldPhone.getText());
-       
+
         //System.out.println(invoiceD.toString());
         // perduoti ji i PDF klase
-       // PdfFactory pdfFactory = new PdfFactory(invoiceD);
-       
+        // PdfFactory pdfFactory = new PdfFactory(invoiceD);
         //PdfFactory pdfFactory = new PdfFactory(invoiceData);
         PdfFactory pdfFactory = new PdfFactory();
         // pdf klaseje iskviesti metoda kuris suhgeneruotu pdf faila su jau paduotais duomenimis
@@ -337,10 +329,8 @@ public class GenerateInvoiceController implements Initializable {
         return invoiceData;
     }
 
-   
-    
-    private void TotalPrice(){
-    dataList.getItemsList();
-    
+    private void TotalPrice() {
+        dataList.getItemsList();
+
     }
 }

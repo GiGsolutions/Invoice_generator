@@ -57,6 +57,7 @@ public class CustomersViewController implements Initializable {
 //Insert into table values from Object Client which imports from Database import
         tblClient.getItems().clear();
         tblClient.getItems().addAll(new DataBaseImport().GetClientData());
+        
 
          colID.setCellValueFactory((TableColumn.CellDataFeatures<Client, Long> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getID());
