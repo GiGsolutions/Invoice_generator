@@ -1,7 +1,7 @@
 package account;
 
 import account.view.HomeViewController;
-//import account.view.LeftMenuController;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,13 +12,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DataBaseImport;
 import org.apache.log4j.BasicConfigurator;
-//import org.apache.log4j.BasicConfigurator;
+
 
 /**
  *
  * @author Gepardas
  */
 public class Account extends Application {
+    
+    private static final String PATH_CSS_DARK_METRO_STYLE = "resources/JMetroDarkTheme.css";
+    
 
     private Stage stage;
     private BorderPane mainLayout;
@@ -30,7 +33,7 @@ public class Account extends Application {
         org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
 
         this.stage = stage;
-        this.stage.setTitle("Account App");
+        this.stage.setTitle("Invoice Generator : GIGSolutions");
         showMainConsoleLayout();
         showGenerateInvoice();
 
@@ -50,6 +53,7 @@ public class Account extends Application {
 
         mainLayout = loader.load();
         Scene scene = new Scene(mainLayout);
+        scene.getStylesheets().add(Account.class.getResource(PATH_CSS_DARK_METRO_STYLE).toString());
 
         HomeViewController controller = loader.getController();
         controller.setVariables(mainLayout);
@@ -58,33 +62,7 @@ public class Account extends Application {
         stage.show();
     }
 
-//    private void showMainItems() throws IOException {
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(Account.class.getResource("view/HomeView.fxml"));
-//
-//        
-//       BorderPane mainItems = (BorderPane) loader.load();  
-//              
-//              //give to controler variambles 'main layout'
-//       HomeViewController controller = loader.getController();
-//       controller.setVariables(mainLayout);
-//       
-//        mainLayout.setTop(mainItems);
-//        
-//          FXMLLoader loader1 = new FXMLLoader();
-//        loader.setLocation(Account.class.getResource("view/GenerateInvoice.fxml"));
-//
-//        
-//       BorderPane mainItems1 = (BorderPane) loader.load();  
-//              
-//              //give to controler variambles 'main layout'
-////       HomeViewController controller = loader.getController();
-////       controller.setVariables(mainLayout);
-//       
-//        mainLayout.setCenter(mainItems1);
-//
-//    }
-//    
+  
     private void showGenerateInvoice() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Account.class.getResource("view/GenerateInvoice.fxml"));
