@@ -9,11 +9,29 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Orientation;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.shape.Rectangle;
+
 import javafx.scene.text.Text;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import model.DataBaseImport;
 import model.InvoiceData;
 import model.beans.Client;
@@ -108,6 +126,8 @@ public class GenerateInvoiceController implements Initializable {
 
     //   PdfFactory pdfFactory;
     InvoiceData invoiceData;
+    @FXML
+    private ComboBox<Client> cbCustomers;
 
     /**
      * Initializes the controller class.
@@ -128,7 +148,109 @@ public class GenerateInvoiceController implements Initializable {
         ObservableList<Client> list = FXCollections.observableArrayList();
         list = data.GetClientData();
 
-        //System.out.println("-> | Pries lista: " + clientList.size());
+        cbCustomers.setItems(list);
+        //cbCustomers.setButtonCell(cellFactory.call(null));
+        
+        cbCustomers.setCellFactory(new Callback<ListView<Client>, ListCell<Client>>() {
+            @Override
+            public ListCell<Client> call(ListView<Client> param) {
+                return new ListCell<Client>() {
+                     private final Rectangle rectangle;
+                    private final Label lblFaultDescription;
+                    private final Label lblFaultsFound;
+                    private final Label lblFaultType;
+                    private final Separator separator;
+
+                    private HBox box;
+
+                    private GridPane gridPane;
+
+                    {
+
+                        ColumnConstraints column1 = new ColumnConstraints();
+                         column1.setMinWidth(20);
+                       
+                        ColumnConstraints column2 = new ColumnConstraints();
+                         column2.hgrowProperty().set(Priority.ALWAYS);
+                        separator = new Separator();
+                        separator.setOrientation(Orientation.VERTICAL);
+
+                        //  setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        rectangle = new Rectangle(10, 10);
+                        lblFaultDescription = new Label();
+                        lblFaultType = new Label();
+                        lblFaultsFound = new Label();
+                        lblFaultType.setPadding(new Insets(0, 0, 0, 5));
+
+                        lblFaultType.getStyleClass().add("label-black");
+                        lblFaultDescription.getStyleClass().add("label-black");
+                        box = new HBox(lblFaultType);
+
+                        box.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+
+                        gridPane = new GridPane();
+                        gridPane.setStyle(null);
+                        // gridPane.setMaxWidth(400);
+                        gridPane.getColumnConstraints().addAll(column1, column2);
+
+                        // gridPane.setGridLinesVisible(true);
+                        GridPane.setConstraints(lblFaultDescription, 0, 0);
+                        GridPane.setHalignment(lblFaultDescription, HPos.LEFT);
+                        GridPane.setConstraints(lblFaultsFound, 0, 0);
+                        GridPane.setHalignment(lblFaultsFound, HPos.RIGHT);
+
+                        GridPane.setConstraints(separator, 1, 0);
+                        GridPane.setHalignment(separator, HPos.LEFT);
+
+                        GridPane.setConstraints(box, 1, 0);
+                        GridPane.setHalignment(box, HPos.RIGHT);
+                        gridPane.getChildren().addAll(lblFaultDescription, box, separator, lblFaultsFound);
+
+                    }
+
+                    @Override
+                    protected void updateItem(Client item, boolean empty) {
+                        super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+
+                        if (item == null || empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                           
+                            lblFaultDescription.setText(item.getCode() +"");
+                            lblFaultType.setText( item.getName());
+
+                            setGraphic(gridPane);
+                        }
+                    }
+
+                };
+
+            }
+        });
+        
+        
+            cbCustomers.setConverter(new StringConverter<Client>() {
+
+            @Override
+            public String toString(Client object) {
+                if (object != null) {
+                    return object.getName();
+
+                } else {
+                    return null;
+                }
+
+            }
+
+            @Override
+            public Client fromString(String string) {
+                return null;
+            }
+        });
+        
+            cbCustomers.getSelectionModel().selectFirst(); //select the first element
+
         for (Client client : list) {
             System.out.println("Clients code: " + client.getCode());
             if (client.getCode().toString().equals(searchCode.getText())) {
@@ -236,8 +358,7 @@ public class GenerateInvoiceController implements Initializable {
         totalItem.setQuantity(Integer.parseInt(txtFieldItemQuantity.getText()));
         totalItem.setDescription(txtFieldItemDestripcion.getText());
 
-        
-//Sets table fields
+        //Sets table fields
         tblItemsForInvoice.getItems().addAll(totalItem);
         tblItemsForInvoice.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
