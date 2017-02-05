@@ -21,6 +21,7 @@ import model.beans.Item;
  * @author Gepardas
  */
 public class ProductsController implements Initializable {
+
     Item item = new Item();
     @FXML
     private TableView<Item> tblItem;
@@ -42,26 +43,27 @@ public class ProductsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       updateTableView();
-    }    
-    
-    private void updateTableView( )  {
+        updateTableView();
+    }
+
+    private void updateTableView() {
 //Insert into table values from Object Client which imports from Database import
         tblItem.getItems().clear();
         tblItem.getItems().addAll(new DataBaseImport().GetItemsData());
+        tblItem.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-          colID.setCellValueFactory((TableColumn.CellDataFeatures<Item, Long> param) -> {
+        colID.setCellValueFactory((TableColumn.CellDataFeatures<Item, Long> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getID());
         });
 
         colName.setCellValueFactory((TableColumn.CellDataFeatures<Item, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getName());
         });
-        
+
         colSize.setCellValueFactory((TableColumn.CellDataFeatures<Item, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getSize());
         });
-        
+
         colColor.setCellValueFactory((TableColumn.CellDataFeatures<Item, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getColor());
         });
@@ -71,9 +73,6 @@ public class ProductsController implements Initializable {
         colPrice.setCellValueFactory((TableColumn.CellDataFeatures<Item, Double> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getPrice());
         });
-       
-        
-
 
     }
 }

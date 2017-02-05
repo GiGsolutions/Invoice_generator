@@ -5,7 +5,6 @@
  */
 package account.view;
 
-
 import model.beans.Client;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import model.DataBaseImport;
  * @author Gepardas
  */
 public class CustomersViewController implements Initializable {
-    
+
     Client client = new Client();
 
     @FXML
@@ -45,31 +44,30 @@ public class CustomersViewController implements Initializable {
     @FXML
     private TableColumn<Client, String> colEmail;
 
-  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         updateTableView();
-    }    
-    
-    
-     private void updateTableView( ) {
+    }
+
+    private void updateTableView() {
 //Insert into table values from Object Client which imports from Database import
         tblClient.getItems().clear();
         tblClient.getItems().addAll(new DataBaseImport().GetClientData());
+        tblClient.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-         colID.setCellValueFactory((TableColumn.CellDataFeatures<Client, Long> param) -> {
+        colID.setCellValueFactory((TableColumn.CellDataFeatures<Client, Long> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getID());
         });
 
         colName.setCellValueFactory((TableColumn.CellDataFeatures<Client, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getName());
         });
-        
+
         colCode.setCellValueFactory((TableColumn.CellDataFeatures<Client, Long> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getCode());
         });
-        
+
         colAdress.setCellValueFactory((TableColumn.CellDataFeatures<Client, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getAdress());
         });
@@ -85,9 +83,6 @@ public class CustomersViewController implements Initializable {
         colEmail.setCellValueFactory((TableColumn.CellDataFeatures<Client, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getEmail());
         });
-        
-        
-        
 
     }
 }
