@@ -124,7 +124,7 @@ public class CustomersViewController implements Initializable {
          
          
          
-         clearFields();
+         //clearFields();
          
          
     }

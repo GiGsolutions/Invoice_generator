@@ -45,7 +45,7 @@ public class DataBaseInjection {
             
 
            
-           String sqlString = "INSERT INTO Client" + "(Name, Code, Adress, Country, City, Phone, Email)"
+           String sqlString = "INSERT INTO Client (Name, Code, Adress, Country, City, Phone, Email)" 
 //                   +name+","
 //                   +code+"," 
 //                   +adress+"," 
@@ -54,7 +54,7 @@ public class DataBaseInjection {
 //                   +phone+","
 //                   +email  
 //                   +")"
-                   +"VALUES (?,?,?,?,?,?,?)";
+                   + " VALUES (?,?,?,?,?,?,?)";
 //                   
 
 
@@ -69,7 +69,8 @@ public class DataBaseInjection {
             preparedStatement.setString(7, email);
             
             
-            
+           // execute insert SQL stetement
+            int affectedRows = preparedStatement.executeUpdate();   
             
             
      System.out.println(code);
