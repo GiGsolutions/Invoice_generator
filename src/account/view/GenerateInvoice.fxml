@@ -48,7 +48,7 @@
                         <TextField fx:id="txtFieldItemSize" minWidth="80.0" prefWidth="80.0" promptText="Size" />
                         <TextField fx:id="txtFieldItemColor" minWidth="80.0" prefWidth="80.0" promptText="Color" />
                         <TextField fx:id="txtFieldItemPrice" minWidth="80.0" prefWidth="80.0" promptText="Price" />
-                        <TextField fx:id="txtFieldItemQuantity" minWidth="90.0" prefWidth="100.0" promptText="Quantity" />
+                        <TextField fx:id="txtFieldItemQuantity" minWidth="90.0" prefWidth="100.0" promptText="Quantity" text="1" />
                         <Button minWidth="200.0" mnemonicParsing="false" onAction="#onClickAddProduct" text="Add Product" />
                      </children>
                      <VBox.margin>

@@ -405,8 +405,8 @@ public class GenerateInvoiceController implements Initializable {
         txtFieldItemColor.clear();
         txtFieldItemDestripcion.clear();
         txtFieldItemPrice.clear();
-        txtFieldItemQuantity.clear();
-
+        txtFieldItemQuantity.setText("1");
+        
     }
 
     @FXML
@@ -424,10 +424,7 @@ public class GenerateInvoiceController implements Initializable {
                 fieldCountry.getText(),
                 fieldPhone.getText());
 
-        //System.out.println(invoiceD.toString());
-        // perduoti ji i PDF klase
-        // PdfFactory pdfFactory = new PdfFactory(invoiceD);
-        //PdfFactory pdfFactory = new PdfFactory(invoiceData);
+        
         PdfFactory pdfFactory = new PdfFactory();
         // pdf klaseje iskviesti metoda kuris suhgeneruotu pdf faila su jau paduotais duomenimis
         pdfFactory.setBuyerData(invoiceD);
