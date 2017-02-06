@@ -1,18 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package account.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.DataBaseImport;
+import model.DataBaseInjection;
 import model.beans.Item;
 
 /**
@@ -37,6 +36,18 @@ public class ProductsController implements Initializable {
     private TableColumn<Item, String> colDescription;
     @FXML
     private TableColumn<Item, Double> colPrice;
+    
+ // Add item txt fields
+    @FXML
+    private TextField txtFieldItemName;
+    @FXML
+    private TextField txtFieldItemSize;
+    @FXML
+    private TextField txtFieldItemColor;
+    @FXML
+    private TextField txtFieldItemDescription;
+    @FXML
+    private TextField txtFieldItemPrice;
 
     /**
      * Initializes the controller class.
@@ -74,5 +85,27 @@ public class ProductsController implements Initializable {
             return new ReadOnlyObjectWrapper<>(param.getValue().getPrice());
         });
 
+    }
+
+    @FXML
+    private void onClickAddItem(ActionEvent event) {
+        DataBaseInjection dataBaseInjection= new DataBaseInjection(txtFieldItemName.getText(),
+                txtFieldItemSize.getText(),
+                txtFieldItemColor.getText(),
+                txtFieldItemDescription.getText(),
+                txtFieldItemPrice.getText());
+        
+        dataBaseInjection.addItem();
+        updateTableView();
+        clearItemTxtFields();
+        
+    }
+    private void clearItemTxtFields(){
+    txtFieldItemName.clear();
+    txtFieldItemSize.clear();
+    txtFieldItemColor.clear();
+    txtFieldItemDescription.clear();
+    txtFieldItemSize.clear();
+    
     }
 }
