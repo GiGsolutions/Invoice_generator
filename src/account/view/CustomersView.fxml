@@ -14,28 +14,28 @@
       <TableView fx:id="tblClient" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="colID" prefWidth="54.0" text="ID" />
-          <TableColumn fx:id="colName" prefWidth="79.0" text="Name" />
-            <TableColumn fx:id="colCode" prefWidth="77.0" text="Code" />
-            <TableColumn fx:id="colAdress" prefWidth="90.0" text="Adress" />
-            <TableColumn fx:id="colCity" prefWidth="75.0" text="City" />
-            <TableColumn fx:id="colCountry" prefWidth="75.0" text="Country" />
-            <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-            <TableColumn fx:id="colEmail" prefWidth="75.0" text="Email" />
+          <TableColumn fx:id="colName" prefWidth="93.0" text="Name" />
+            <TableColumn fx:id="colCode" prefWidth="89.0" text="Code" />
+            <TableColumn fx:id="colAdress" prefWidth="109.0" text="Adress" />
+            <TableColumn fx:id="colCity" prefWidth="65.0" text="City" />
+            <TableColumn fx:id="colCountry" prefWidth="84.0" text="Country" />
+            <TableColumn fx:id="colPhone" prefWidth="84.0" text="Phone" />
+            <TableColumn fx:id="colEmail" prefWidth="82.0" text="Email" />
         </columns>
       </TableView>
    </center>
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox spacing="10.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <TextField fx:id="txtFieldClientName" prefHeight="25.0" prefWidth="83.0" promptText="Name" />
-                  <TextField fx:id="txtFieldClientCode" prefHeight="25.0" prefWidth="83.0" promptText="Code" />
-                  <TextField fx:id="txtFieldClientAdress" prefHeight="25.0" prefWidth="83.0" promptText="Adress" />
-                  <TextField fx:id="txtFieldClientCountry" prefHeight="25.0" prefWidth="83.0" promptText="Country" />
-                  <TextField fx:id="txtFieldClientCity" prefHeight="25.0" prefWidth="83.0" promptText="City" />
-                  <TextField fx:id="txtFieldClientPhone" prefHeight="25.0" prefWidth="83.0" promptText="Phone" />
-                  <TextField fx:id="txtFieldClientEmail" prefHeight="25.0" prefWidth="83.0" promptText="Email" />
+                  <TextField fx:id="txtFieldClientName" prefHeight="25.0" prefWidth="120.0" promptText="Name" />
+                  <TextField fx:id="txtFieldClientCode" prefHeight="25.0" prefWidth="120.0" promptText="Code" />
+                  <TextField fx:id="txtFieldClientAdress" prefHeight="25.0" prefWidth="120.0" promptText="Adress" />
+                  <TextField fx:id="txtFieldClientCountry" prefHeight="25.0" prefWidth="120.0" promptText="Country" />
+                  <TextField fx:id="txtFieldClientCity" prefHeight="25.0" prefWidth="120.0" promptText="City" />
+                  <TextField fx:id="txtFieldClientPhone" prefHeight="25.0" prefWidth="120.0" promptText="Phone" />
+                  <TextField fx:id="txtFieldClientEmail" prefHeight="25.0" prefWidth="120.0" promptText="Email" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

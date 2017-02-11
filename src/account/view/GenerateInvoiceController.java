@@ -13,6 +13,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -252,7 +253,7 @@ public class GenerateInvoiceController implements Initializable {
             cbCustomers.getSelectionModel().selectFirst(); //select the first element
 
         for (Client client : list) {
-            System.out.println("Clients code: " + client.getCode());
+           
             if (client.getCode().toString().equals(searchCode.getText())) {
 
                 fieldName.setText(client.getName());
@@ -272,13 +273,13 @@ public class GenerateInvoiceController implements Initializable {
 
         }
 
-        System.out.println(fieldName.getText());
+       
 
         if (fieldCode.getText().equalsIgnoreCase(searchCode.getText()) && !searchCode.getText().trim().isEmpty()) {
             lblInfo.setText("Record Found");
 
             lblInfo.setFill(javafx.scene.paint.Color.GREEN);
-            System.out.println("FOUND");
+           
 
         } else {
             lblInfo.setText("Record NOT Found");
@@ -370,8 +371,7 @@ public class GenerateInvoiceController implements Initializable {
 
         //Gives values to Total_Items List in bean       
         totalItem.setItemsList(tblItemsForInvoice.getItems());
-        System.out.println(totalItem.getItemsList().size());
-//         System.out.println(totalItem.getItemsList().toString());
+       
 
         colInputName.setCellValueFactory((TableColumn.CellDataFeatures<Total_Items, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getName());
@@ -431,7 +431,7 @@ public class GenerateInvoiceController implements Initializable {
         pdfFactory.setItemsData(dataList);
         pdfFactory.GenetarePdf();
 
-        //System.out.println(fieldName.getText());
+        
     }
 
     private InvoiceData setBuyerInfoToInvoice2() {
@@ -444,7 +444,7 @@ public class GenerateInvoiceController implements Initializable {
                 fieldCity.getText(),
                 fieldCountry.getText(),
                 fieldPhone.getText());
-        // System.out.println(invoiceData.toString());
+      
         return invoiceData;
     }
 
@@ -452,4 +452,22 @@ public class GenerateInvoiceController implements Initializable {
         dataList.getItemsList();
 
     }
-}
+
+    @FXML
+    private void onClickDeleteFromShoppingList(ActionEvent event) {
+        ObservableList<Total_Items> productSelected, allProducts;
+
+        allProducts = tblItemsForInvoice.getItems();
+
+        productSelected = tblItemsForInvoice.getSelectionModel().getSelectedItems();
+
+
+
+        productSelected.forEach(allProducts::remove);
+
+    }
+        
+        
+        
+    }
+

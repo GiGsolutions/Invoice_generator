@@ -69,9 +69,10 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </TableView>
-                  <HBox alignment="CENTER_LEFT">
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onClickGeneratePdfInvoice" prefHeight="50.0" prefWidth="200.0" text="Generate PDF Invoice " />
+                        <Button mnemonicParsing="false" onAction="#onClickDeleteFromShoppingList" text="Delete from shopping list" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
