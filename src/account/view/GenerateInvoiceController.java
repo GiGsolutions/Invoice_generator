@@ -231,10 +231,10 @@ public class GenerateInvoiceController implements Initializable {
             @Override
             public ListCell<Client> call(ListView<Client> param) {
                 return new ListCell<Client>() {
-                    private final Rectangle rectangle;
-                    private final Label lblFaultDescription;
-                    private final Label lblFaultsFound;
-                    private final Label lblFaultType;
+
+                    private final Label lblID;
+                    private final Label lblDescription;
+
                     private final Separator separator;
 
                     private HBox box;
@@ -244,23 +244,20 @@ public class GenerateInvoiceController implements Initializable {
                     {
 
                         ColumnConstraints column1 = new ColumnConstraints();
-                        column1.setMinWidth(20);
+                        column1.setMinWidth(60);
 
                         ColumnConstraints column2 = new ColumnConstraints();
                         column2.hgrowProperty().set(Priority.ALWAYS);
                         separator = new Separator();
                         separator.setOrientation(Orientation.VERTICAL);
 
-                        //  setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                        rectangle = new Rectangle(10, 10);
-                        lblFaultDescription = new Label();
-                        lblFaultType = new Label();
-                        lblFaultsFound = new Label();
-                        lblFaultType.setPadding(new Insets(0, 0, 0, 5));
+                        lblID = new Label();
+                        lblDescription = new Label();
 
-                        lblFaultType.getStyleClass().add("label-black");
-                        lblFaultDescription.getStyleClass().add("label-black");
-                        box = new HBox(lblFaultType);
+                        lblID.getStyleClass().add("label-black");
+                        lblDescription.getStyleClass().add("label-black");
+
+                        box = new HBox(lblDescription);
 
                         box.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
@@ -270,17 +267,17 @@ public class GenerateInvoiceController implements Initializable {
                         gridPane.getColumnConstraints().addAll(column1, column2);
 
                         // gridPane.setGridLinesVisible(true);
-                        GridPane.setConstraints(lblFaultDescription, 0, 0);
-                        GridPane.setHalignment(lblFaultDescription, HPos.LEFT);
-                        GridPane.setConstraints(lblFaultsFound, 0, 0);
-                        GridPane.setHalignment(lblFaultsFound, HPos.RIGHT);
+                        GridPane.setConstraints(lblID, 0, 0);
+                        GridPane.setHalignment(lblID, HPos.LEFT);
+                        GridPane.setConstraints(lblDescription, 1, 0);
+                        GridPane.setHalignment(lblDescription, HPos.RIGHT);
 
                         GridPane.setConstraints(separator, 1, 0);
                         GridPane.setHalignment(separator, HPos.LEFT);
 
                         GridPane.setConstraints(box, 1, 0);
                         GridPane.setHalignment(box, HPos.RIGHT);
-                        gridPane.getChildren().addAll(lblFaultDescription, box, separator, lblFaultsFound);
+                        gridPane.getChildren().addAll(lblID, box, separator, lblDescription);
 
                     }
 
@@ -293,8 +290,8 @@ public class GenerateInvoiceController implements Initializable {
                             setText(null);
                         } else {
 
-                            lblFaultDescription.setText(item.getCode() + "");
-                            lblFaultType.setText(item.getName());
+                            lblID.setText("" + item.getCode());
+                            lblDescription.setText(item.getName());
 
                             setGraphic(gridPane);
                         }
@@ -310,7 +307,7 @@ public class GenerateInvoiceController implements Initializable {
             @Override
             public String toString(Client object) {
                 if (object != null) {
-                    return object.getName();
+                    return object.getCode() + " | " + object.getName();
 
                 } else {
                     return null;
