@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -137,6 +139,13 @@ public class GenerateInvoiceController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         lblInfo.setText("");
 
+        // Clients Combobox Setup
+        clientComboBoxLoadData();
+        clientComboBoxSetGraphics();
+        clientComboBoxListenersSetup();
+
+        cbCustomers.getSelectionModel().selectFirst(); //select the first element
+
     }
 
     @FXML
@@ -149,14 +158,83 @@ public class GenerateInvoiceController implements Initializable {
         ObservableList<Client> list = FXCollections.observableArrayList();
         list = data.GetClientData();
 
+        for (Client client : list) {
+
+            if (client.getCode().toString().equals(searchCode.getText())) {
+
+                fillInClientsFields(client);
+
+                break;
+
+            } else {
+                System.out.println("Not found");
+
+            }
+
+        }
+
+        if (fieldCode.getText().equalsIgnoreCase(searchCode.getText()) && !searchCode.getText().trim().isEmpty()) {
+            lblInfo.setText("Record Found");
+
+            lblInfo.setFill(javafx.scene.paint.Color.GREEN);
+
+        } else {
+            lblInfo.setText("Record NOT Found");
+            //lblInfo.setStroke(javafx.scene.paint.Color.RED);
+            lblInfo.setFill(javafx.scene.paint.Color.RED);
+
+        }
+
+    }
+
+    /**
+     * Fill in Client fields with information required
+     *
+     * @param client - client object
+     */
+    private void fillInClientsFields(Client client) {
+
+        fieldName.setText(client.getName());
+        fieldCode.setText(client.getCode().toString());
+        fieldAdress.setText(client.getAdress());
+        fieldCity.setText(client.getCity());
+        fieldCountry.setText(client.getCountry());
+        fieldPhone.setText(client.getPhone());
+        fieldEmail.setText(client.getEmail());
+
+    }
+
+    /**
+     * Clients ComboBox load Data
+     */
+    private void clientComboBoxLoadData() {
+        DataBaseImport data = new DataBaseImport();
+        ObservableList<Client> list = FXCollections.observableArrayList();
+        list = data.GetClientData();
         cbCustomers.setItems(list);
-        //cbCustomers.setButtonCell(cellFactory.call(null));
-        
+    }
+
+    /**
+     * Clients ComboBox set value change listener
+     */
+    private void clientComboBoxListenersSetup() {
+        cbCustomers.valueProperty().addListener((ObservableValue<? extends Client> observable, Client oldValue, Client newValue) -> {
+            if (newValue != null) {
+                fillInClientsFields(newValue);
+            }
+        });
+
+    }
+
+    /**
+     * Clients ComboBox view setup
+     */
+    private void clientComboBoxSetGraphics() {
         cbCustomers.setCellFactory(new Callback<ListView<Client>, ListCell<Client>>() {
             @Override
             public ListCell<Client> call(ListView<Client> param) {
                 return new ListCell<Client>() {
-                     private final Rectangle rectangle;
+                    private final Rectangle rectangle;
                     private final Label lblFaultDescription;
                     private final Label lblFaultsFound;
                     private final Label lblFaultType;
@@ -169,10 +247,10 @@ public class GenerateInvoiceController implements Initializable {
                     {
 
                         ColumnConstraints column1 = new ColumnConstraints();
-                         column1.setMinWidth(20);
-                       
+                        column1.setMinWidth(20);
+
                         ColumnConstraints column2 = new ColumnConstraints();
-                         column2.hgrowProperty().set(Priority.ALWAYS);
+                        column2.hgrowProperty().set(Priority.ALWAYS);
                         separator = new Separator();
                         separator.setOrientation(Orientation.VERTICAL);
 
@@ -217,9 +295,9 @@ public class GenerateInvoiceController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
-                           
-                            lblFaultDescription.setText(item.getCode() +"");
-                            lblFaultType.setText( item.getName());
+
+                            lblFaultDescription.setText(item.getCode() + "");
+                            lblFaultType.setText(item.getName());
 
                             setGraphic(gridPane);
                         }
@@ -229,9 +307,8 @@ public class GenerateInvoiceController implements Initializable {
 
             }
         });
-        
-        
-            cbCustomers.setConverter(new StringConverter<Client>() {
+
+        cbCustomers.setConverter(new StringConverter<Client>() {
 
             @Override
             public String toString(Client object) {
@@ -249,44 +326,6 @@ public class GenerateInvoiceController implements Initializable {
                 return null;
             }
         });
-        
-            cbCustomers.getSelectionModel().selectFirst(); //select the first element
-
-        for (Client client : list) {
-           
-            if (client.getCode().toString().equals(searchCode.getText())) {
-
-                fieldName.setText(client.getName());
-                fieldCode.setText(client.getCode().toString());
-                fieldAdress.setText(client.getAdress());
-                fieldCity.setText(client.getCity());
-                fieldCountry.setText(client.getCountry());
-                fieldPhone.setText(client.getPhone());
-                fieldEmail.setText(client.getEmail());
-
-                break;
-
-            } else {
-                System.out.println("Not found");
-
-            }
-
-        }
-
-       
-
-        if (fieldCode.getText().equalsIgnoreCase(searchCode.getText()) && !searchCode.getText().trim().isEmpty()) {
-            lblInfo.setText("Record Found");
-
-            lblInfo.setFill(javafx.scene.paint.Color.GREEN);
-           
-
-        } else {
-            lblInfo.setText("Record NOT Found");
-            //lblInfo.setStroke(javafx.scene.paint.Color.RED);
-            lblInfo.setFill(javafx.scene.paint.Color.RED);
-
-        }
 
     }
 
@@ -371,7 +410,6 @@ public class GenerateInvoiceController implements Initializable {
 
         //Gives values to Total_Items List in bean       
         totalItem.setItemsList(tblItemsForInvoice.getItems());
-       
 
         colInputName.setCellValueFactory((TableColumn.CellDataFeatures<Total_Items, String> param) -> {
             return new ReadOnlyObjectWrapper<>(param.getValue().getName());
@@ -406,7 +444,7 @@ public class GenerateInvoiceController implements Initializable {
         txtFieldItemDestripcion.clear();
         txtFieldItemPrice.clear();
         txtFieldItemQuantity.setText("1");
-        
+
     }
 
     @FXML
@@ -424,14 +462,12 @@ public class GenerateInvoiceController implements Initializable {
                 fieldCountry.getText(),
                 fieldPhone.getText());
 
-        
         PdfFactory pdfFactory = new PdfFactory();
         // pdf klaseje iskviesti metoda kuris suhgeneruotu pdf faila su jau paduotais duomenimis
         pdfFactory.setBuyerData(invoiceD);
         pdfFactory.setItemsData(dataList);
         pdfFactory.GenetarePdf();
 
-        
     }
 
     private InvoiceData setBuyerInfoToInvoice2() {
@@ -444,7 +480,7 @@ public class GenerateInvoiceController implements Initializable {
                 fieldCity.getText(),
                 fieldCountry.getText(),
                 fieldPhone.getText());
-      
+
         return invoiceData;
     }
 
@@ -461,13 +497,8 @@ public class GenerateInvoiceController implements Initializable {
 
         productSelected = tblItemsForInvoice.getSelectionModel().getSelectedItems();
 
-
-
         productSelected.forEach(allProducts::remove);
 
     }
-        
-        
-        
-    }
 
+}
